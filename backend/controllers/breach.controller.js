@@ -1,10 +1,10 @@
 const breachService = require("../services/breach.service");
 
-function prepareBreachCheck(req, res, next) {
+async function checkEmailBreach(req, res, next) {
   try {
     const { email } = req.body;
 
-    const result = breachService.prepareBreachCheck(email);
+    const result = await breachService.checkEmailBreach(email);
 
     res.json({
       success: true,
@@ -16,5 +16,5 @@ function prepareBreachCheck(req, res, next) {
 }
 
 module.exports = {
-  prepareBreachCheck,
+  checkEmailBreach,
 };

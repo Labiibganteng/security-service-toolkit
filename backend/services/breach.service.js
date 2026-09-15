@@ -25,16 +25,46 @@ function validateEmail(email) {
   return cleaned;
 }
 
-function prepareBreachCheck(email) {
+async function checkEmailBreach(email) {
   const normalizedEmail = validateEmail(email);
+
+  const encodedEmail = encodeURIComponent(normalizedEmail);
+
+  const response = await fetch(
+    `https://api.xposedornot.com/v1/check-email/${encodedEmail}`
+  );
+
+  const data = await response.json();
+
+  if (response.status === 404 || data.Error === "Not found") {
+    return {
+      email: normalizedEmail,
+      breached: false,
+      breaches: [],
+    };
+  }
+
+  if (!response.ok) {
+    const error = new Error(
+      data.Error || "Failed to check email breach status"
+    );
+    error.status = response.status;
+    throw error;
+  }
+
+  const rawBreaches = Array.isArray(data.breaches) ? data.breaches : [];
+
+  const breaches = rawBreaches.flat();
 
   return {
     email: normalizedEmail,
-    status: "ready_for_breach_check",
+    breached: breaches.length > 0,
+    breachCount: breaches.length,
+    breaches,
   };
 }
 
 module.exports = {
   validateEmail,
-  prepareBreachCheck,
+  checkEmailBreach,
 };
