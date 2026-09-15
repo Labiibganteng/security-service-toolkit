@@ -15,6 +15,7 @@ const urlRoutes = require("./routes/url.routes");
 const passwordRoutes = require("./routes/password.routes");
 const breachRoutes = require("./routes/breach.routes");
 const metadataRoutes = require("./routes/metadata.routes");
+const locationRoutes = require("./routes/location.routes");
 const app = express();
 
 // Security headers
@@ -49,6 +50,7 @@ app.use("/api/url", urlRoutes);
 app.use("/api/password", passwordRoutes);
 app.use("/api/breach", breachRoutes);
 app.use("/api/metadata", metadataRoutes);
+app.use("/api/location", locationRoutes);
 // Health check
 app.get("/api/health", (req, res) => {
   res.json({
