@@ -10,6 +10,7 @@ const systemRoutes = require("./routes/system.routes");
 const ipRoutes = require("./routes/ip.routes");
 const dnsRoutes = require("./routes/dns.routes");
 const phoneRoutes = require("./routes/phone.routes");
+const domainRoutes = require("./routes/domain.routes");
 const app = express();
 
 // Security headers
@@ -39,6 +40,7 @@ app.use("/api/system", systemRoutes);
 app.use("/api/ip", ipRoutes);
 app.use("/api/dns", dnsRoutes);
 app.use("/api/phone", phoneRoutes);
+app.use("/api/domain", domainRoutes);
 // Health check
 app.get("/api/health", (req, res) => {
   res.json({
