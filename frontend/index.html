@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Security Service Toolkit</title>
+
+  <meta
+    name="description"
+    content="Security, privacy and OSINT service toolkit."
+  >
+</head>
+
+<body>
+
+  <main>
+    <h1>Security Service Toolkit</h1>
+
+    <p>
+      Security, privacy and OSINT service platform.
+    </p>
+
+    <p id="status">
+      Checking server...
+    </p>
+  </main>
+
+  <script>
+    fetch("/api/health")
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("status").textContent =
+          data.message;
+      })
+      .catch(() => {
+        document.getElementById("status").textContent =
+          "Server offline";
+      });
+  </script>
+
+</body>
+</html>
