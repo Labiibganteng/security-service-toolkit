@@ -8,7 +8,7 @@ const config = require("./config/environment");
 const errorHandler = require("./middleware/errorHandler");
 const systemRoutes = require("./routes/system.routes");
 const ipRoutes = require("./routes/ip.routes");
-
+const dnsRoutes = require("./routes/dns.routes");
 const app = express();
 
 // Security headers
@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, "../frontend")));
 // API routes
 app.use("/api/system", systemRoutes);
 app.use("/api/ip", ipRoutes);
-
+app.use("/api/dns", dnsRoutes);
 // Health check
 app.get("/api/health", (req, res) => {
   res.json({
