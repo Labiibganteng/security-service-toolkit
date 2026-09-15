@@ -7,6 +7,7 @@ const path = require("path");
 const config = require("./config/environment");
 const errorHandler = require("./middleware/errorHandler");
 const systemRoutes = require("./routes/system.routes");
+const ipRoutes = require("./routes/ip.routes");
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, "../frontend")));
 
 // API routes
 app.use("/api/system", systemRoutes);
+app.use("/api/ip", ipRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {
