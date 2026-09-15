@@ -3,10 +3,12 @@ const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const path = require("path");
-require("dotenv").config();
+
+const config = require("./config/environment");
+const errorHandler = require("./middleware/errorHandler");
+const systemRoutes = require("./routes/system.routes");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Security headers
 app.use(helmet());
@@ -30,12 +32,16 @@ app.use("/api", limiter);
 // Frontend
 app.use(express.static(path.join(__dirname, "../frontend")));
 
+// API routes
+app.use("/api/system", systemRoutes);
+
 // Health check
 app.get("/api/health", (req, res) => {
   res.json({
     success: true,
     message: "Security Service Toolkit API is running",
     status: "online",
+    environment: config.nodeEnv,
   });
 });
 
@@ -52,12 +58,16 @@ app.use((req, res) => {
   });
 });
 
-// Server
-app.listen(PORT, () => {
+// Error handler
+app.use(errorHandler);
+
+// Start server
+app.listen(config.port, () => {
   console.log("=================================");
   console.log(" Security Service Toolkit");
   console.log("=================================");
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Local: http://localhost:${PORT}`);
+  console.log(`Environment: ${config.nodeEnv}`);
+  console.log(`Server running on port ${config.port}`);
+  console.log(`Local: http://localhost:${config.port}`);
   console.log("=================================");
 });
