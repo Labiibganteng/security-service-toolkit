@@ -1,10 +1,10 @@
 const urlService = require("../services/urlScanner.service");
 
-function getUrlInfo(req, res, next) {
+function analyzeUrl(req, res, next) {
   try {
     const { url } = req.query;
 
-    const result = urlService.getUrlInfo(url);
+    const result = urlService.analyzeUrl(url);
 
     res.json({
       success: true,
@@ -16,5 +16,5 @@ function getUrlInfo(req, res, next) {
 }
 
 module.exports = {
-  getUrlInfo,
+  analyzeUrl,
 };
